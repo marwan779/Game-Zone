@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Game>
+
+@{
+	ViewData["title"] = "Games";
+}
+
+<a class="btn btn-secondary" asp-controller="Games" asp-action="Create" style="margin-top: 10px">
+	<i class="bi bi-plus-circle-dotted"></i>
+	Add Game
+</a>
+
+@if (!Model.Any())
+{
+	<div class="alert alert-primary">
+		<strong>No Games</strong> <a href="#" class="alert-link">Try adding new games</a>
+	</div>
+}
+else
+{
+	<div class="mt-5">
+		<table class="table table-bordered border-primary">
+			<tbody>
+				@foreach(var Game in Model)
+				{
+					<tr class="border-1 border-primary">
+						<td>
+							<div class="d-flex">
+								<div class="pe-4">
+									<img src="@($"{FileSettings.ImagePath}/{Game.Cover}")" alt="@Game.Name" style="max-width: 90px" />
+								</div>
+								<div class="align-middle">
+									<h4 class="text-light">@Game.Name</h4>
+									<h5>@Game.Category.Name</h5>
+								</div>
+							</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-end">
+								<a class="btn btn-info rounded rounded-3 me-2" asp-controller="Games" asp-action="Edit" asp-route-id="@Game.Id">
+									<i class="bi bi-pencil-fill"></i>
+								</a>
+								<a href="javascript:;" class="btn btn-danger rounded rounded-3 me-2 js-delete" data-id ="@Game.Id">
+									<i class="bi bi-trash3"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
+
+@section Scripts{
+	<script src="~/js/games-index.js"></script>
+}
